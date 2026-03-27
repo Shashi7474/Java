@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Book Class
+class Book {
+    int id;
+    String title;
+    String author;
+    boolean isIssued;
+
+    Book(int id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.isIssued = false;
+    }
+
+    void display() {
+        System.out.println("ID: " + id +
+                ", Title: " + title +
+                ", Author: " + author +
+                ", Status: " + (isIssued ? "Issued" : "Available"));
+    }
+}
+
+// Main Class
+public class LibraryManagementSystem {
+    static ArrayList<Book> books = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    // Add Book
+    public static void addBook() {
+        System.out.print("Enter Book ID: ");
+        int id = sc.nextInt();
+
+        sc.nextLine(); // clear buffer
+
+        System.out.print("Enter Title: ");
+        String title = sc.nextLine();
+
+        System.out.print("Enter Author: ");
+        String author = sc.nextLine();
+
+        books.add(new Book(id, title, author));
+        System.out.println("✅ Book Added!");
+    }
+
+    // View Books
+    public static void viewBooks() {
+        if (books.isEmpty()) {
+            System.out.println("⚠ No books available.");
+            return;
+        }
+
+        System.out.println("\n--- Book List ---");
+        for (Book b : books) {
