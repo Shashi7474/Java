@@ -1,0 +1,153 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Product Class
+class Product {
+    int id;
+    String name;
+    double price;
+
+    Product(int id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
+    void display() {
+        System.out.println(id + ". " + name + " - ₹" + price);
+    }
+}
+
+// Main Class
+public class ShoppingCartSystem {
+
+    static ArrayList<Product> products = new ArrayList<>();
+    static ArrayList<Product> cart = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+
+    // Add Product
+    public static void addProduct() {
+        System.out.print("Enter Product ID: ");
+        int id = sc.nextInt();
+
+        sc.nextLine();
+
+        System.out.print("Enter Product Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Price: ");
+        double price = sc.nextDouble();
+
+        products.add(new Product(id, name, price));
+        System.out.println("✅ Product Added!");
+    }
+
+    // View Products
+    public static void viewProducts() {
+        if (products.isEmpty()) {
+            System.out.println("⚠ No products available.");
+            return;
+        }
+
+        System.out.println("\n--- Product List ---");
+        for (Product p : products) {
+            p.display();
+        }
+    }
+
+    // Add to Cart
+    public static void addToCart() {
+        System.out.print("Enter Product ID to add: ");
+        int id = sc.nextInt();
+
+        for (Product p : products) {
+            if (p.id == id) {
+                cart.add(p);
+                System.out.println("🛒 Added to cart!");
+                return;
+            }
+        }
+
+        System.out.println("❌ Product not found.");
+    }
+
+    // Remove from Cart
+    public static void removeFromCart() {
+        System.out.print("Enter Product ID to remove: ");
+        int id = sc.nextInt();
+
+        for (Product p : cart) {
+            if (p.id == id) {
+                cart.remove(p);
+                System.out.println("❌ Removed from cart.");
+                return;
+            }
+        }
+
+        System.out.println("⚠ Product not in cart.");
+    }
+
+    // View Cart
+    public static void viewCart() {
+        if (cart.isEmpty()) {
+            System.out.println("🛒 Cart is empty.");
+            return;
+        }
+
+        System.out.println("\n--- Your Cart ---");
+        for (Product p : cart) {
+            p.display();
+        }
+    }
+
+    // Generate Bill
+    public static void generateBill() {
+        if (cart.isEmpty()) {
+            System.out.println("⚠ Cart is empty.");
+            return;
+        }
+
+        double total = 0;
+        System.out.println("\n--- Bill ---");
+        for (Product p : cart) {
+            System.out.println(p.name + " - ₹" + p.price);
+            total += p.price;
+        }
+
+        System.out.println("-------------------");
+        System.out.println("Total Amount: ₹" + total);
+    }
+
+    // Main Menu
+    public static void main(String[] args) {
+        int choice;
+
+        do {
+            System.out.println("\n===== Shopping Cart System =====");
+            System.out.println("1. Add Product");
+            System.out.println("2. View Products");
+            System.out.println("3. Add to Cart");
+            System.out.println("4. Remove from Cart");
+            System.out.println("5. View Cart");
+            System.out.println("6. Generate Bill");
+            System.out.println("7. Exit");
+
+            System.out.print("Enter choice: ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1: addProduct(); break;
+                case 2: viewProducts(); break;
+                case 3: addToCart(); break;
+                case 4: removeFromCart(); break;
+                case 5: viewCart(); break;
+                case 6: generateBill(); break;
+                case 7: System.out.println("👋 Thank you!"); break;
+                default: System.out.println("❌ Invalid choice!");
+            }
+
+        } while (choice != 7);
+
+        sc.close();
+    }
+}
