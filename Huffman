@@ -1,0 +1,52 @@
+import java.util.*;
+
+class HuffmanNode {
+    int freq;
+    char ch;
+    HuffmanNode left, right;
+}
+
+class HuffmanComparator implements Comparator<HuffmanNode> {
+    public int compare(HuffmanNode x, HuffmanNode y) {
+        return x.freq - y.freq;
+    }
+}
+
+public class HuffmanCoding {
+
+    static void printCodes(HuffmanNode root, String code) {
+        if (root.left == null && root.right == null) {
+            System.out.println(root.ch + ": " + code);
+            return;
+        }
+        printCodes(root.left, code + "0");
+        printCodes(root.right, code + "1");
+    }
+
+    public static void main(String[] args) {
+        char[] chars = {'a', 'b', 'c', 'd', 'e', 'f'};
+        int[] freq = {5, 9, 12, 13, 16, 45};
+
+        PriorityQueue<HuffmanNode> pq = new PriorityQueue<>(new HuffmanComparator());
+
+        for (int i = 0; i < chars.length; i++) {
+            HuffmanNode node = new HuffmanNode();
+            node.ch = chars[i];
+            node.freq = freq[i];
+            pq.add(node);
+        }
+
+        while (pq.size() > 1) {
+            HuffmanNode left = pq.poll();
+            HuffmanNode right = pq.poll();
+
+            HuffmanNode newNode = new HuffmanNode();
+            newNode.freq = left.freq + right.freq;
+            newNode.ch = '-';
+            newNode.left = left;
+            newNode.right = right;
+
+            pq.add(newNode);
+        }
+
+        Huff
