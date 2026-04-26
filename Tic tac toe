@@ -1,0 +1,60 @@
+import java.util.*;
+
+public class TicTacToe {
+    static char[][] board = new char[3][3];
+
+    static void initBoard() {
+        for (int i = 0; i < 3; i++)
+            Arrays.fill(board[i], '-');
+    }
+
+    static void printBoard() {
+        for (char[] row : board) {
+            for (char c : row)
+                System.out.print(c + " ");
+            System.out.println();
+        }
+    }
+
+    static boolean isWin(char p) {
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0] == p && board[i][1] == p && board[i][2] == p)
+                return true;
+            if (board[0][i] == p && board[1][i] == p && board[2][i] == p)
+                return true;
+        }
+        if (board[0][0] == p && board[1][1] == p && board[2][2] == p)
+            return true;
+        if (board[0][2] == p && board[1][1] == p && board[2][0] == p)
+            return true;
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        initBoard();
+        char player = 'X';
+
+        for (int i = 0; i < 9; i++) {
+            printBoard();
+            System.out.println("Player " + player + " enter row and col:");
+            int r = sc.nextInt();
+            int c = sc.nextInt();
+
+            if (board[r][c] == '-') {
+                board[r][c] = player;
+                if (isWin(player)) {
+                    printBoard();
+                    System.out.println("Player " + player + " wins!");
+                    return;
+                }
+                player = (player == 'X') ? 'O' : 'X';
+            } else {
+                System.out.println("Invalid move");
+                i--;
+            }
+        }
+        System.out.println("Draw!");
+    }
+}
