@@ -1,0 +1,43 @@
+import java.util.*;
+
+class Question {
+    String question, optionA, optionB, optionC, optionD;
+    char answer;
+
+    Question(String q, String a, String b, String c, String d, char ans) {
+        question = q;
+        optionA = a;
+        optionB = b;
+        optionC = c;
+        optionD = d;
+        answer = ans;
+    }
+}
+
+public class QuizSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Question> quiz = new ArrayList<>();
+
+        quiz.add(new Question("Java is?", "Language", "OS", "Browser", "IDE", 'A'));
+        quiz.add(new Question("Size of int?", "2", "4", "8", "16", 'B'));
+        quiz.add(new Question("JVM stands for?", "Java Virtual Machine", "Java Variable Method", "Just VM", "None", 'A'));
+
+        int score = 0;
+
+        for (Question q : quiz) {
+            System.out.println("\n" + q.question);
+            System.out.println("A. " + q.optionA);
+            System.out.println("B. " + q.optionB);
+            System.out.println("C. " + q.optionC);
+            System.out.println("D. " + q.optionD);
+
+            System.out.print("Answer: ");
+            char ans = sc.next().toUpperCase().charAt(0);
+
+            if (ans == q.answer) score++;
+        }
+
+        System.out.println("\nFinal Score: " + score + "/" + quiz.size());
+    }
+}
